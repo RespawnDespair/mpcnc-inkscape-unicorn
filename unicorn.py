@@ -16,6 +16,20 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
+
+'''
+This code is meant for needle cutting foam board.
+It can work with just the needle cutter or a combination of a needle cutter and a pen.
+
+In the first configuration it uses a shallow cut depth for engraving.
+In the second configuration it uses the pen for the engravings.
+
+G0 commands are used for moving the Z axis up and down.
+Sx commands are used to move a servo connected to the pen holder.
+
+https://wiki.inkscape.org/wiki/index.php/INX_Parameters
+'''
+
 import sys,os
 import inkex
 from math import *
@@ -38,14 +52,14 @@ class MyEffect(inkex.Effect):
                       action="store", type="float",
                       dest="pen_down_angle", default="6.0",
                       help="Pen Cut Depth")
-    self.OptionParser.add_option("--pen-score-angle",
+    self.OptionParser.add_option("--pen-x-offset",
                       action="store", type="float",
-                      dest="pen_score_angle", default="2.5",
-                      help="Pen Score Depth")
-    self.OptionParser.add_option("--pen-draw-angle",
+                      dest="pen_x_offset", default="2.5",
+                      help="Pen X offset")
+    self.OptionParser.add_option("-pen-y-offset",
                       action="store", type="float",
-                      dest="pen_mark_angle", default="1.0",
-                      help="Pen Mark Depth")
+                      dest="pen_y_offset", default="1.0",
+                      help="Pen Y offset")
     self.OptionParser.add_option("--start-delay",
                       action="store", type="float",
                       dest="start_delay", default="1",
@@ -66,6 +80,22 @@ class MyEffect(inkex.Effect):
                       action="store", type="float",
                       dest="z_feedrate", default="150.0",
                       help="Z axis feedrate in mm/min")
+    self.OptionParser.add_option("--needle-start-delay",
+                      action="store", type="float",
+                      dest="needle_start_delay", default="0.0",
+                      help="Delay after needle down command before movement in seconds")
+    self.OptionParser.add_option("--needle-stop-delay",
+                      action="store", type="float",
+                      dest="needle_stop_delay", default="0.0",
+                      help="Delay after needle up command before movement in seconds")
+    self.OptionParser.add_option("--pen-x-offset",
+                      action="store", type="float",
+                      dest="pen_x_offset", default="0.0",
+                      help="X Offset of the pen from normal tool")
+    self.OptionParser.add_option("--pen-y-offset",
+                      action="store", type="float",
+                      dest="pen_y_offset", default="0.0",
+                      help="Y Offset of the pen from normal tool")
     self.OptionParser.add_option("--z-height",
                       action="store", type="float",
                       dest="z_height", default="0.0",
@@ -97,11 +127,23 @@ class MyEffect(inkex.Effect):
     self.context.generate()
 
   def effect(self):
-    self.context = GCodeContext(self.options.xy_feedrate,self.options.xy_travelrate,
-                           self.options.start_delay, self.options.stop_delay,
+    self.context = GCodeContext(
+                           self.options.xy_feedrate,
+                           self.options.xy_travelrate,
+                           self.options.z_feedrate,
+                           self.options.start_delay, 
+                           self.options.stop_delay,
+                           self.options.needle_start_delay,
+                           self.options.needle_stop_delay,
+                           self.options.needle_up_position,
+                           self.options.needle_cut_position,
+                           self.options.needle_score_position,
+                           self.options.use_pen,
                            self.options.pen_up_cmd,
                            self.options.pen_down_cmd,
-                           self.options.pen_down_angle, self.options.pen_score_angle, self.options.pen_mark_angle,
+                           self.options.pen_down_angle, 
+                           self.options.pen_x_offset,
+                           self.options.pen_y_offset,
                            self.options.continuous,
                            self.svg_file)
     parser = SvgParser(self.document.getroot())

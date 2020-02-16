@@ -6,16 +6,27 @@
   <dependency type="executable" location="extensions">unicorn.py</dependency>
   <dependency type="executable" location="extensions">inkex.py</dependency>
   <param name="tab" type="notebook">
-    <page name="plotter_setup" _gui-text="Setup">
+    <page name="plotter_setup" _gui-text="Machine Setup">
+      <param name="needle-up-position" type="float" min="0.0" max="180.0" _gui-text="Needle up position (safe travel)">20</param>
+      <param name="needle-cut-position" type="float" min="-20.0" max="180.0" _gui-text="Needle cut position (completely through foamboard)">-7</param>
+      <param name="needle-score-position" type="float" min="-20.0" max="180.0" _gui-text="Needle score position (halfway through foamboard)">-3</param>
+      <param name="needle-start-delay" type="float" min="0.0" max="10.0" _gui-text="Delay after needle-cut or score command before movement in seconds.">1</param>
+      <param name="needle-stop-delay" type="float" min="0.0" max="10.0" _gui-text="Delay after needle-up command before movement in seconds.">1</param>
+      <param name="xy-feedrate" type="float" min="100.0" max="10000.0" _gui-text="XY axes feedrate in mm/min. (feed is speed while cutting)">3500.0</param>
+      <param name="xy-travelrate" type="float" min="100.0" max="10000.0" _gui-text="XY axes travelrate in mm/min. (travel is speed while not cutting)">7000.0</param>
+      <param name="z-feedrate" type="float" min="100.0" max="500.0" _gui-text="Z axis feedrate. (The speed with which the z axis comes down)">7000.0</param>
+    </page>
+    <page name="pen_engraving_setup" _gui-text="Pen Engraving Setup">
+      <param name="description_engraving" type="description">This defines the method used for engraving.</param>
+      <param name="use-pen" type="boolean" gui-text="Use a separate pen for engraving">false</param>
       <param name="pen-up-cmd" type="string" default="M5" _gui-text="Pen Up command">M5</param>
       <param name="pen-down-cmd" type="string" default="M3" _gui-text="Pen Down command">M3</param>
       <param name="pen-down-angle" type="float" min="0.0" max="180.0" _gui-text="Pen Down Angle">90</param>
-      <param name="pen-score-angle" type="float" min="0.0" max="180.0" _gui-text="Pen Score Angle">45</param>
-      <param name="pen-draw-angle" type="float" min="0.0" max="180.0" _gui-text="Pen Draw Angle">10</param>
       <param name="start-delay" type="float" min="0.0" max="10.0" _gui-text="Delay after pen-down command before movement in seconds.">1</param>
       <param name="stop-delay" type="float" min="0.0" max="10.0" _gui-text="Delay after pen-up command before movement in seconds.">1</param>
-      <param name="xy-feedrate" type="float" min="100.0" max="10000.0" _gui-text="XY axes feedrate in mm/min.">3500.0</param>
-      <param name="xy-travelrate" type="float" min="100.0" max="10000.0" _gui-text="XY axes travelrate in mm/min.">7000.0</param>
+      <param name="description_offsets" type="description" appearance="header">This defines the offsets of the pen tool.</param>
+      <param name="pen-x-offset" type="float" min="0.0" max="500.0" _gui-text="X Offset of the pen from normal tool">0</param>
+      <param name="pen-y-offset" type="float" min="0.0" max="500.0" _gui-text="Y Offset of the pen from normal tool">0</param>
     </page>
   </param>
 

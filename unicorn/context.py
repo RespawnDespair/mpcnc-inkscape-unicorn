@@ -2,18 +2,27 @@ from math import *
 import sys
 
 class GCodeContext:
-    def __init__(self, xy_feedrate, xy_travelrate, start_delay, stop_delay, pen_up_cmd, pen_down_cmd, pen_down_angle, pen_score_angle, pen_mark_angle, continuous, file):
+    def __init__(self, xy_feedrate, xy_travelrate, z_feedrate, start_delay, stop_delay, needle_start_delay, needle_stop_delay, needle_up_position, needle_cut_position, needle_score_position, use_pen, pen_up_cmd, pen_down_cmd, pen_down_angle, pen_x_offset, pen_y_offset, continuous, file):
+    #def __init__(self, xy_feedrate, xy_travelrate, start_delay, stop_delay, pen_up_cmd, pen_down_cmd, pen_down_angle, pen_score_angle, pen_mark_angle, continuous, file):
       self.xy_feedrate = xy_feedrate
       self.xy_travelrate = xy_travelrate
       self.start_delay = start_delay
       self.stop_delay = stop_delay
+      self.needle_start_delay = needle_start_delay
+      self.needle_stop_delay = needle_stop_delay
+      self.needle_up_position = needle_up_position
+      self.needle_cut_position = needle_cut_position
+      self.needle_score_position = needle_score_position
+      self.use_pen = use_pen
       self.pen_up_cmd = pen_up_cmd
       self.pen_down_cmd = pen_down_cmd
       self.pen_down_angle = pen_down_angle
-      self.pen_score_angle = pen_score_angle
-      self.pen_mark_angle = pen_mark_angle
+      self.pen_x_offset = pen_x_offset
+      self.pen_y_offset = pen_y_offset
+      #self.pen_score_angle = pen_score_angle
+      #self.pen_mark_angle = pen_mark_angle
       self.finished_height = 0
-      self.z_feedrate = 0
+      self.z_feedrate = z_feedrate
       self.x_home = 0
       self.y_home = 0
       self.z_height = 0
