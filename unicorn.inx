@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>MPCNC Needle Cutter G-Code Output</_name>
+  <id>com.mpcnc.gcode</id>
+  <dependency type="extension">org.inkscape.output.svg.inkscape</dependency>
+  <dependency type="executable" location="extensions">unicorn.py</dependency>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <param name="tab" type="notebook">
+    <page name="plotter_setup" _gui-text="Setup">
+      <param name="pen-up-cmd" type="string" default="M5" _gui-text="Pen Up command">M5</param>
+      <param name="pen-down-cmd" type="string" default="M3" _gui-text="Pen Down command">M3</param>
+      <param name="pen-down-angle" type="float" min="0.0" max="180.0" _gui-text="Pen Down Angle">90</param>
+      <param name="pen-score-angle" type="float" min="0.0" max="180.0" _gui-text="Pen Score Angle">45</param>
+      <param name="pen-draw-angle" type="float" min="0.0" max="180.0" _gui-text="Pen Draw Angle">10</param>
+      <param name="start-delay" type="float" min="0.0" max="10.0" _gui-text="Delay after pen-down command before movement in seconds.">1</param>
+      <param name="stop-delay" type="float" min="0.0" max="10.0" _gui-text="Delay after pen-up command before movement in seconds.">1</param>
+      <param name="xy-feedrate" type="float" min="100.0" max="10000.0" _gui-text="XY axes feedrate in mm/min.">3500.0</param>
+      <param name="xy-travelrate" type="float" min="100.0" max="10000.0" _gui-text="XY axes travelrate in mm/min.">7000.0</param>
+    </page>
+  </param>
+
+  <output>
+    <extension>.gcode</extension>
+    <mimetype>application/x-gcode</mimetype>
+    <_filetypename>MPCNC Needle Cutter G-Code (*.gcode)</_filetypename>
+    <_filetypetooltip>Toolpath for the MPCNC Needle Cutter</_filetypetooltip>
+    <dataloss>true</dataloss>
+  </output>
+  <script>
+    <command reldir="extensions" interpreter="python">unicorn.py</command>
+  </script>
+</inkscape-extension>
